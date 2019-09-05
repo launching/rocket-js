@@ -12,6 +12,7 @@
 <script>
 import RButton from "@/components/Button/Button";
 import ChildrenMixins from "@/mixins/Children";
+import _ from "lodash";
 export default {
   mixins: [ChildrenMixins],
   components: {
@@ -22,6 +23,9 @@ export default {
   },
   methods: {
     handlerClick(child, index) {
+      if (_.isFunction(child.action)) {
+        child.action(this.ctx);
+      }
       this.$emit("click", child, this.ctx);
     },
   },

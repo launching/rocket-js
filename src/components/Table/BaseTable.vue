@@ -16,7 +16,7 @@
       v-loading="loading"
     >
       <r-base-column
-        v-for="(column, $index) in columns"
+        v-for="(column, $index) in targetColumns"
         :key="$index"
         v-bind="column"
       ></r-base-column>
@@ -37,7 +37,8 @@
 <script>
 import RForm from "@/components/Form/Form.vue";
 import RBaseColumn from "@/components/Table/Column/BaseColumn.vue";
-
+import { filterToolbarMap } from "@/common/constants/table";
+import _ from "lodash";
 export default {
   components: {
     RForm,
@@ -72,25 +73,33 @@ export default {
       return [];
     },
     targetFilter() {
+      if (!this.filter) return {};
+
       if (!this.filter.toolbar) {
-        return {
-          ...this.filter,
-          size: "small",
-          toolbar: [
-            {
-              icon: "el-icon-search",
-              type: "primary",
-              text: "搜索",
-              action: "SEARCH",
-            },
-            {
-              text: "清空",
-              action: "CANCEL",
-            },
-          ],
-        };
+        this.filter.toolbar = ["SEARCH", "CANCEL"];
       }
-      return this.filter;
+
+      const toolbar = [];
+      this.filter.toolbar.forEach(item => {
+        if (_.isString(item)) {
+          toolbar.push(filterToolbarMap[item]);
+        } else {
+          toolbar.push(item);
+        }
+      });
+      return {
+        ...this.filter,
+        size: "small",
+        toolbar,
+      };
+    },
+    targetColumns() {
+      return this.columns.map(item => {
+        if (item.toolbar) {
+          item.type = item.type || "toolbar";
+        }
+        return item;
+      });
     },
     targetData() {
       return [];

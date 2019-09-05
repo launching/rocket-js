@@ -4,15 +4,15 @@ import { roles } from "./roles";
 export const users = {
   1: {
     name: "admin",
-    role: roles.admin,
+    role: roles.admin.name,
   },
   2: {
     name: "张三",
-    role: roles.client,
+    role: roles.client.name,
   },
   3: {
     name: "李四",
-    role: roles.admin,
+    role: roles.admin.name,
   },
 };
 
