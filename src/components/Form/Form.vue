@@ -1,7 +1,7 @@
 <template>
   <div class="r-form" :style="style">
     <el-form ref="form" v-bind="formProps">
-      <template v-for="(child, i) in targetChildren">
+      <template v-for="(child, i) in targetChildrenHandler">
         <el-form-item
           v-if="!isArray(child)"
           :label="child.label"
@@ -107,6 +107,21 @@ export default {
     validateOnRuleChange() {
       return Object.keys(this.widgets).some(key => !this.widget[key]);
     },
+    targetChildrenHandler() {
+      return this.targetChildren.reduce((total, current, index) => {
+        const last = total[total.length - 1];
+        if (current.col && current.col !== 24) {
+          if (!last.widget || _.isArray(last)) {
+            last.push(current);
+          } else {
+            total.push([current]);
+          }
+        } else {
+          total.push(current);
+        }
+        return total;
+      }, []);
+    },
     formProps() {
       const { widgetList, toolbar, handlerSize, ...props } = this.$props;
       return {
@@ -149,6 +164,7 @@ export default {
     isArray: _.isArray,
     toolbarHandler(child, ctx) {
       if (_.isString(child.action)) {
+        this.$emit("onClick", child.action, this.model);
         if (child.action === "SUBMIT") {
           this.submit();
         } else if (child.action === "CANCEL") {

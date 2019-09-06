@@ -1,28 +1,15 @@
 <template>
   <div>
     User
-    <el-dialog :visible.sync="status.create">
-      <user-create
-        @onSubmit="close('create')"
-        @onCancel="close('create')"
-      ></user-create>
-    </el-dialog>
-    <el-dialog :visible.sync="status.edit">
-      <user-edit
-        :user="selectUser"
-        @onSubmit="close('edit')"
-        @onCancel="close('edit')"
-      ></user-edit>
-    </el-dialog>
     <div>
       <r-local-table
-        ref="table"
         :filter="filter"
         :columns="columns"
         :data="data"
         border
         fit
         localPage
+        ref="table"
       >
       </r-local-table>
     </div>
@@ -31,22 +18,13 @@
 
 <script>
 import RLocalTable from "@/components/Table/LocalTable";
-import UserCreate from "./Create";
-import UserEdit from "./Edit";
 import users from "@/views/data/users";
 export default {
   components: {
     RLocalTable,
-    UserCreate,
-    UserEdit,
   },
   data() {
     return {
-      status: {
-        create: false,
-        edit: false,
-      },
-      selectUser: {},
       filter: {
         inline: true,
         children: [{ widget: "input", name: "name" }],
@@ -56,7 +34,7 @@ export default {
           {
             text: "创建",
             action: () => {
-              this.status.create = true;
+              this.$router.push({ name: "UserCreate" }).catch(e => {});
             },
           },
         ],
@@ -68,15 +46,25 @@ export default {
         { label: "名字", name: "name" },
         { label: "角色", name: "role" },
         {
-          label: "操作",
           type: "toolbar",
-          children: [
+          label: "操作",
+          toolbar: [
             {
-              text: "Edit",
+              text: "edit",
               size: "small",
               action: user => {
-                this.selectUser = user;
-                this.status.edit = true;
+                this.$router
+                  .push({ name: "UserEdit", query: { ...user } })
+                  .catch(e => {});
+              },
+            },
+            {
+              text: "delete",
+              size: "small",
+              confirm: true,
+              action: user => {
+                this.$message.success(`${user.name}已经被删除`);
+                this.$refs.table.refreshData();
               },
             },
           ],
@@ -86,14 +74,6 @@ export default {
         return users;
       },
     };
-  },
-  methods: {
-    open(type) {
-      this.status[type] = true;
-    },
-    close(type) {
-      this.status[type] = false;
-    },
   },
 };
 </script>

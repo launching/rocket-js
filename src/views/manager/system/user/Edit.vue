@@ -1,10 +1,11 @@
 <template>
   <div class="rv-user-edit">
     <r-form
+      width="500"
       :children="children"
       @onSubmit="onSubmit"
       @onCancel="onCancel"
-      :default-model="user"
+      :default-model="{ name, id, role }"
     ></r-form>
   </div>
 </template>
@@ -13,17 +14,18 @@
 import RForm from "@/components/Form/Form";
 export default {
   props: {
-    user: Object,
+    name: String,
+    role: String,
+    id: String,
   },
   components: {
     RForm,
   },
-
   data() {
     return {
       children: [
         {
-          label: "用户名",
+          label: "姓名",
           name: "name",
           widget: "input",
           validate: [
@@ -43,7 +45,7 @@ export default {
               trigger: "blur",
             },
           ],
-          options: ["admin", "client"],
+          options: ["client", "admin"],
         },
       ],
     };
@@ -52,11 +54,11 @@ export default {
     onSubmit(validate, model) {
       if (validate) {
         this.$message.success(`${model.name}修改成功`);
-        this.$emit("onSubmit");
+        this.$router.push({ name: "users" });
       }
     },
     onCancel(model) {
-      this.$emit("onCancel");
+      this.$router.push({ name: "users" });
     },
   },
 };

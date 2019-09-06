@@ -18,27 +18,12 @@ export default {
   computed: {
     targetChildren() {
       const target = [];
-      const showTarget = this.children
-        .filter(item => {
-          if (!_.isUndefined(this.premises[item.name])) {
-            return this.premises[item.name];
-          }
-          return true;
-        })
-        .reduce((total, current, index) => {
-          const last = total[total.length - 1];
-          if (current.col && current.col !== 24) {
-            if (!last.widget || _.isArray(last)) {
-              last.push(current);
-            } else {
-              total.push([current]);
-            }
-          } else {
-            total.push(current);
-          }
-
-          return total;
-        }, []);
+      const showTarget = this.children.filter(item => {
+        if (!_.isUndefined(this.premises[item.name])) {
+          return this.premises[item.name];
+        }
+        return true;
+      });
       return showTarget;
     },
   },

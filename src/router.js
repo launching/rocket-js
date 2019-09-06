@@ -2,11 +2,12 @@ import Vue from "vue";
 import Router from "vue-router";
 import RVLogin from "@/views/Login";
 import RVMajor from "@/views/major/index";
+import RouterView from "@/views/major/RouterView";
 import RVUsers from "@/views/manager/system/user/Users";
-import RVRoleContainer from "@/views/manager/system/role";
-import RVRoles from "@/views/manager/system/role/Roles";
-import RVRoleCreate from "@/views/manager/system/role/Create";
-import RVRoleEdit from "@/views/manager/system/role/Edit";
+import RVUserCreate from "@/views/manager/system/user/Create";
+import RVUserEdit from "@/views/manager/system/user/Edit";
+import RVRole from "@/views/manager/system/role";
+import RVGroup from "@/views/manager/system/group";
 
 Vue.use(Router);
 
@@ -22,30 +23,37 @@ export default new Router({
       component: RVMajor,
       children: [
         {
-          path: "users",
-          name: "users",
-          component: RVUsers,
-        },
-        {
-          path: "role",
-          component: RVRoleContainer,
+          path: "user",
+          component: RouterView,
+          props: { keep: true },
           children: [
             {
-              path: "/",
-              name: "roles",
-              component: RVRoles,
+              path: "",
+              name: "users",
+              component: RVUsers,
             },
             {
               path: "create",
-              name: "roleCreate",
-              component: RVRoleCreate,
+              name: "UserCreate",
+              component: RVUserCreate,
             },
             {
               path: "edit",
-              name: "roleEdit",
-              component: RVRoleEdit,
+              name: "UserEdit",
+              component: RVUserEdit,
+              props: route => route.query,
             },
           ],
+        },
+        {
+          path: "role",
+          name: "roles",
+          component: RVRole,
+        },
+        {
+          path: "groups",
+          name: "groups",
+          component: RVGroup,
         },
       ],
     },

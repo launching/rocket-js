@@ -1,6 +1,7 @@
 <template>
-  <div class="rv-user-create">
+  <div class="rv-user-edit">
     <r-form
+      width="500"
       :children="children"
       @onSubmit="onSubmit"
       @onCancel="onCancel"
@@ -11,6 +12,7 @@
 <script>
 import RForm from "@/components/Form/Form";
 export default {
+  props: {},
   components: {
     RForm,
   },
@@ -19,7 +21,7 @@ export default {
     return {
       children: [
         {
-          label: "用户名",
+          label: "姓名",
           name: "name",
           widget: "input",
           validate: [
@@ -39,7 +41,7 @@ export default {
               trigger: "blur",
             },
           ],
-          options: ["admin", "client"],
+          options: ["client", "admin"],
         },
       ],
     };
@@ -47,12 +49,12 @@ export default {
   methods: {
     onSubmit(validate, model) {
       if (validate) {
-        this.$message.success(`${model.name}添加成功`);
-        this.$emit("onSubmit");
+        this.$message.success(`${model.name}修改成功`);
+        this.$router.push({ name: "users" });
       }
     },
     onCancel(model) {
-      this.$emit("onCancel");
+      this.$router.push({ name: "users" });
     },
   },
 };

@@ -5,6 +5,7 @@
         v-if="type === `toolbar`"
         :children="children"
         :ctx="scope.row"
+        @click="onClick"
       ></r-toolbar>
       <span v-else>{{ text(scope) }}</span>
     </template>
@@ -35,6 +36,9 @@ export default {
         return row;
       }
       return _.get(row, this.name);
+    },
+    onClick(...args) {
+      this.$emit("onClick", ...args);
     },
   },
 };

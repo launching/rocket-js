@@ -6,6 +6,7 @@
       ref="filter"
       @onSearch="search"
       @onCancel="search"
+      @onClick="formClick"
     >
     </r-form>
     <el-table
@@ -19,6 +20,7 @@
         v-for="(column, $index) in targetColumns"
         :key="$index"
         v-bind="column"
+        @onClick="columnClick"
       ></r-base-column>
     </el-table>
     <div class="pagination-container" v-if="localPage">
@@ -74,13 +76,15 @@ export default {
     },
     targetFilter() {
       if (!this.filter) return {};
-
+      let originToolbar = [];
       if (!this.filter.toolbar) {
-        this.filter.toolbar = ["SEARCH", "CANCEL"];
+        originToolbar = ["SEARCH", "CANCEL"];
+      } else {
+        originToolbar = this.filter.toolbar;
       }
 
       const toolbar = [];
-      this.filter.toolbar.forEach(item => {
+      originToolbar.forEach(item => {
         if (_.isString(item)) {
           toolbar.push(filterToolbarMap[item]);
         } else {
@@ -94,11 +98,19 @@ export default {
       };
     },
     targetColumns() {
-      return this.columns.map(item => {
-        if (item.toolbar) {
-          item.type = item.type || "toolbar";
+      return this.columns.map(column => {
+        let children = [];
+        if (column.toolbar) {
+          column.type = column.type || "toolbar";
+          children = column.toolbar.map(item => {
+            let temp = _.isString(item) ? filterToolbarMap[item] : item;
+            return {
+              ...temp,
+              size: "small",
+            };
+          });
         }
-        return item;
+        return { ...column, children };
       });
     },
     targetData() {
@@ -106,7 +118,18 @@ export default {
     },
   },
   methods: {
+    refresh() {},
     search(params, page) {},
+    formClick(type, model) {
+      if (type === "SEARCH" || type === "CANCEL") {
+        this.search();
+      } else {
+        this.$emit(`onClick`, type, model);
+      }
+    },
+    columnClick(btnOption, model) {
+      this.$emit("onClick", btnOption.action, model);
+    },
   },
 };
 </script>

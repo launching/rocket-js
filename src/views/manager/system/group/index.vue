@@ -1,27 +1,19 @@
 <template>
-  <r-crud
-    title="Role"
-    :children="children"
-    :store="store"
-    :dialog="true"
-  ></r-crud>
+  <r-crud title="用户组" :children="children" :store="store"></r-crud>
 </template>
 
 <script>
-import RLocalTable from "@/components/Table/LocalTable";
 import RCrud from "@/components/Crud/Crud";
-
-import roles from "@/views/data/roles";
+import users from "@/views/data/users";
 export default {
   components: {
-    RLocalTable,
     RCrud,
   },
   data() {
     return {
       children: [
         {
-          label: "名字",
+          label: "组名",
           name: "name",
           widget: "input",
           validate: [
@@ -35,7 +27,7 @@ export default {
 
       store: {
         data() {
-          return roles;
+          return users;
         },
         create() {
           console.dir("create");
@@ -52,7 +44,6 @@ export default {
       },
     };
   },
-  methods: {},
 };
 </script>
 

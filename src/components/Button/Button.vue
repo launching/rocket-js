@@ -7,6 +7,7 @@
 <script>
 import Disabled from "@/mixins/Disabled";
 import Premise from "@/mixins/Premise";
+import _ from "lodash";
 export default {
   mixins: [Disabled, Premise],
   props: {
@@ -14,6 +15,7 @@ export default {
     type: String,
     icon: String,
     text: String,
+    confirm: [String, Boolean],
   },
   computed: {
     btnProps() {
@@ -28,8 +30,20 @@ export default {
     },
   },
   methods: {
-    click() {
-      this.$emit("click");
+    async click() {
+      let message = this.confirm;
+      let res = true;
+      if (message) {
+        if (_.isBoolean(message)) {
+          message = this.text;
+        }
+        try {
+          await this.$confirm(`确认要进行${message}操作吗？`);
+        } catch (e) {
+          res = false;
+        }
+      }
+      res && this.$emit("click");
     },
   },
 };

@@ -10,15 +10,7 @@ export default {
   },
   watch: {
     data: {
-      async handler() {
-        this.loading = true;
-        const res = await this.dataHandler();
-        this.loading = false;
-        if (!_.isArray(res)) {
-          throw new Error("data is must be Array type");
-        }
-        this.originData = res;
-      },
+      handler: "refreshData",
       immediate: true,
       deep: true,
     },
@@ -50,6 +42,15 @@ export default {
     },
   },
   methods: {
+    async refreshData() {
+      this.loading = true;
+      const res = await this.dataHandler();
+      this.loading = false;
+      if (!_.isArray(res)) {
+        throw new Error("data is must be Array type");
+      }
+      this.originData = res;
+    },
     search(params, page) {
       this.filterData = {
         ...params,

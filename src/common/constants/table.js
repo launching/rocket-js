@@ -11,6 +11,19 @@ export const filterToolbarMap = {
     text: "清空",
     action: "CANCEL",
   },
+  CREATE: {
+    text: "创建",
+    action: "CREATE",
+  },
+  EDIT: {
+    text: "编辑",
+    action: "EDIT",
+  },
+  DELETE: {
+    text: "删除",
+    confirm: true,
+    action: "DELETE",
+  },
 };
 
 export const filterToolbarArray = mapToArray(filterToolbarMap);

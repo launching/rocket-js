@@ -9,6 +9,7 @@
         <span slot="title">System</span>
         <el-menu-item index="users">Users</el-menu-item>
         <el-menu-item index="roles">Roles</el-menu-item>
+        <el-menu-item index="groups">Groups</el-menu-item>
       </el-menu-item-group>
       <el-menu-item-group title="分组2">
         <el-menu-item index="1-3">选项3</el-menu-item>

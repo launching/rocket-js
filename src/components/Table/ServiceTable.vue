@@ -19,14 +19,12 @@ export default {
   },
   watch: {
     data: {
-      handler: () => this.refreshData(),
+      handler: "refreshData",
       immediate: true,
       deep: true,
     },
     pagination: {
-      handler() {
-        this.refreshData();
-      },
+      handler: "refreshData",
       deep: true,
     },
   },
