@@ -18,7 +18,8 @@
 
 <script>
 import RLocalTable from "@/components/Table/LocalTable";
-import users from "@/views/data/users";
+// import users from "@/views/data/users";
+import { getUsers, deleteUser } from "@/api/users";
 export default {
   components: {
     RLocalTable,
@@ -45,6 +46,8 @@ export default {
       columns: [
         { label: "名字", name: "name" },
         { label: "角色", name: "role" },
+        { label: "密码", name: "password" },
+        { label: "年龄", name: "age" },
         {
           type: "toolbar",
           label: "操作",
@@ -62,7 +65,8 @@ export default {
               text: "delete",
               size: "small",
               confirm: true,
-              action: user => {
+              action: async user => {
+                await deleteUser(user.id);
                 this.$message.success(`${user.name}已经被删除`);
                 this.$refs.table.refreshData();
               },
@@ -71,7 +75,7 @@ export default {
         },
       ],
       data() {
-        return users;
+        return getUsers();
       },
     };
   },

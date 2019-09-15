@@ -1,5 +1,10 @@
 # rocket-js
 
+## 启动前先安装后端服务
+https://github.com/launching/rocket-egg
+
+
+
 ## Project setup
 ```
 yarn install

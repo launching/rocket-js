@@ -6,8 +6,9 @@ import RouterView from "@/views/major/RouterView";
 import RVUsers from "@/views/manager/system/user/Users";
 import RVUserCreate from "@/views/manager/system/user/Create";
 import RVUserEdit from "@/views/manager/system/user/Edit";
-import RVRole from "@/views/manager/system/role";
-import RVGroup from "@/views/manager/system/group";
+import RVRole from "@/views/manager/system/role/Role";
+import RVGroup from "@/views/manager/system/group/Group";
+import RVPermission from "@/views/manager/system/permission/Permission";
 
 Vue.use(Router);
 
@@ -54,6 +55,11 @@ export default new Router({
           path: "groups",
           name: "groups",
           component: RVGroup,
+        },
+        {
+          path: "permissions",
+          name: "permissions",
+          component: RVPermission,
         },
       ],
     },

@@ -8,13 +8,12 @@
 </template>
 
 <script>
-import RLocalTable from "@/components/Table/LocalTable";
 import RCrud from "@/components/Crud/Crud";
+import { getRoles, createRole, deleteRole, updateRole } from "@/api/roles";
 
-import roles from "@/views/data/roles";
+// import roles from "@/views/data/roles";
 export default {
   components: {
-    RLocalTable,
     RCrud,
   },
   data() {
@@ -34,20 +33,17 @@ export default {
       ],
 
       store: {
-        data() {
-          return roles;
+        data(params) {
+          return getRoles(params);
         },
-        create() {
-          console.dir("create");
-          return true;
+        create(model) {
+          return createRole(model);
         },
-        delete() {
-          console.dir("delete");
-          return true;
+        delete(model) {
+          return deleteRole(model.id);
         },
-        edit() {
-          console.dir("edit");
-          return true;
+        edit(model) {
+          return updateRole(model.id, model);
         },
       },
     };

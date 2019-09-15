@@ -11,6 +11,8 @@
 
 <script>
 import RForm from "@/components/Form/Form";
+import { register } from "@/api/users";
+
 export default {
   props: {},
   components: {
@@ -43,14 +45,37 @@ export default {
           ],
           options: ["client", "admin"],
         },
+        {
+          label: "密码",
+          name: "password",
+          widget: "password",
+          validate: [
+            {
+              required: true,
+              trigger: "blur",
+            },
+          ],
+        },
+        {
+          label: "年龄",
+          name: "age",
+          widget: "number",
+          validate: [
+            {
+              required: true,
+              trigger: "blur",
+            },
+          ],
+        },
       ],
     };
   },
   methods: {
     onSubmit(validate, model) {
       if (validate) {
-        this.$message.success(`${model.name}修改成功`);
-        this.$router.push({ name: "users" });
+        register(model).then(res => {
+          this.$message.success(`${model.name}修改成功`);
+        });
       }
     },
     onCancel(model) {

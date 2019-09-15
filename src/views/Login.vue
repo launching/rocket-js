@@ -11,6 +11,7 @@
 
 <script>
 import RForm from "@/components/Form/Form.vue";
+import { login } from "@/api/auth";
 export default {
   components: {
     RForm,
@@ -20,9 +21,9 @@ export default {
       children: [
         {
           label: "用户名",
-          name: "username",
+          name: "name",
           widget: "input",
-          defaultValue: "admin",
+          defaultValue: "op_service",
           validate: [
             {
               required: true,
@@ -34,7 +35,7 @@ export default {
           label: "密码",
           name: "password",
           widget: "password",
-          defaultValue: "admin",
+          defaultValue: "xp123456@",
           validate: [
             {
               required: true,
@@ -47,11 +48,9 @@ export default {
   },
   methods: {
     onSubmit(validate, model) {
-      if (model.username === "admin" && model.password === "admin") {
+      login(model).then(res => {
         this.$router.push({ name: "users" });
-      } else {
-        this.$message.error("账号密码错误");
-      }
+      });
     },
   },
 };

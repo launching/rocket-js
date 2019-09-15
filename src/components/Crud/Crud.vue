@@ -54,6 +54,7 @@ const statusMap = {
   LIST: "LIST",
   CREATE: "CREATE",
   EDIT: "EDIT",
+  DELETE: "DELETE",
 };
 export default {
   mixins: [],
@@ -163,6 +164,7 @@ export default {
       this.$refs.table.refreshData();
     },
     async onClickTable(type, model) {
+      console.dir(type);
       if (type === statusMap.CREATE) {
         this.selectModel = {};
         this.crud.status = statusMap.CREATE;
@@ -188,13 +190,13 @@ export default {
         } else if (status === statusMap.EDIT) {
           res = await this.store.edit(model);
         }
-        res && this.dialogClose();
         res && this.refreshTable();
       }
     },
     async onCancel() {
       this.selectModel = {};
       this.dialogClose();
+      this.refreshTable();
     },
   },
 };

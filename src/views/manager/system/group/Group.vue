@@ -4,7 +4,8 @@
 
 <script>
 import RCrud from "@/components/Crud/Crud";
-import users from "@/views/data/users";
+// import users from "@/views/data/users";
+import { getGroups, createGroup, deleteGroup, updateGroup } from "@/api/groups";
 export default {
   components: {
     RCrud,
@@ -26,20 +27,17 @@ export default {
       ],
 
       store: {
-        data() {
-          return users;
+        data(params) {
+          return getGroups(params);
         },
-        create() {
-          console.dir("create");
-          return true;
+        create(model) {
+          return createGroup(model);
         },
-        delete() {
-          console.dir("delete");
-          return true;
+        delete(model) {
+          return deleteGroup(model.id);
         },
-        edit() {
-          console.dir("edit");
-          return true;
+        edit(model) {
+          return updateGroup(model.id, model);
         },
       },
     };

@@ -5,18 +5,21 @@
       :children="children"
       @onSubmit="onSubmit"
       @onCancel="onCancel"
-      :default-model="{ name, id, role }"
+      :default-model="{ name, password, role, age }"
     ></r-form>
   </div>
 </template>
 
 <script>
 import RForm from "@/components/Form/Form";
+import { updateUser } from "@/api/users";
 export default {
   props: {
     name: String,
     role: String,
-    id: String,
+    age: [String, Number],
+    password: String,
+    id: [String, Number],
   },
   components: {
     RForm,
@@ -47,14 +50,37 @@ export default {
           ],
           options: ["client", "admin"],
         },
+        {
+          label: "密码",
+          name: "password",
+          widget: "password",
+          validate: [
+            {
+              required: true,
+              trigger: "blur",
+            },
+          ],
+        },
+        {
+          label: "年龄",
+          name: "age",
+          widget: "number",
+          validate: [
+            {
+              required: true,
+              trigger: "blur",
+            },
+          ],
+        },
       ],
     };
   },
   methods: {
     onSubmit(validate, model) {
       if (validate) {
-        this.$message.success(`${model.name}修改成功`);
-        this.$router.push({ name: "users" });
+        updateUser(this.id, model).then(res => {
+          this.$message.success(`${model.name}修改成功`);
+        });
       }
     },
     onCancel(model) {
