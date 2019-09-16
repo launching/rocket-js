@@ -45,7 +45,7 @@ export default {
       fit: true,
       columns: [
         { label: "名字", name: "name" },
-        { label: "角色", name: "role" },
+        { label: "角色", name: "role.name" },
         { label: "密码", name: "password" },
         { label: "年龄", name: "age" },
         {

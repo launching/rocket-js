@@ -13,7 +13,6 @@ export default {
     options: {
       async handler() {
         const res = await this.optionsHandler();
-
         this.targetOptions = res.map(item => {
           if (_.isString(item)) {
             return {
@@ -21,7 +20,9 @@ export default {
               value: item,
             };
           } else {
-            return item;
+            return {
+              ...item,
+            };
           }
         });
       },

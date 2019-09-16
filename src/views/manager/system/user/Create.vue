@@ -2,6 +2,8 @@
   <div class="rv-user-edit">
     <r-form
       width="500"
+      label-width="80px"
+      label-position="top"
       :children="children"
       @onSubmit="onSubmit"
       @onCancel="onCancel"

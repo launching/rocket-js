@@ -42,7 +42,13 @@ export default new Router({
               path: "edit",
               name: "UserEdit",
               component: RVUserEdit,
-              props: route => route.query,
+              props: route => {
+                const query = route.query;
+                query.roleId = parseInt(query.roleId);
+                query.id = parseInt(query.id);
+                query.age = parseInt(query.age);
+                return query;
+              },
             },
           ],
         },

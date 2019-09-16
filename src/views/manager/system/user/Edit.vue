@@ -2,10 +2,12 @@
   <div class="rv-user-edit">
     <r-form
       width="500"
+      label-width="80px"
+      label-position="top"
       :children="children"
       @onSubmit="onSubmit"
       @onCancel="onCancel"
-      :default-model="{ name, password, role, age }"
+      :default-model="{ name, password, roleId, age }"
     ></r-form>
   </div>
 </template>
@@ -13,13 +15,14 @@
 <script>
 import RForm from "@/components/Form/Form";
 import { updateUser } from "@/api/users";
+import { getRoles } from "@/api/roles";
 export default {
   props: {
     name: String,
-    role: String,
-    age: [String, Number],
+    roleId: [Number],
+    age: [Number],
     password: String,
-    id: [String, Number],
+    id: [Number],
   },
   components: {
     RForm,
@@ -40,7 +43,7 @@ export default {
         },
         {
           label: "角色",
-          name: "role",
+          name: "roleId",
           widget: "select",
           validate: [
             {
@@ -48,7 +51,13 @@ export default {
               trigger: "blur",
             },
           ],
-          options: ["client", "admin"],
+          options: () =>
+            getRoles().then(res =>
+              res.map(n => ({
+                label: n.name,
+                value: n.id,
+              }))
+            ),
         },
         {
           label: "密码",
@@ -77,6 +86,7 @@ export default {
   },
   methods: {
     onSubmit(validate, model) {
+      console.dir(model);
       if (validate) {
         updateUser(this.id, model).then(res => {
           this.$message.success(`${model.name}修改成功`);

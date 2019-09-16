@@ -13,6 +13,8 @@
           @close="dialogClose"
         >
           <r-form
+            :label-width="formLabelWidth"
+            :label-position="formLabelPosition"
             :children="formChildren"
             @onSubmit="onSubmit"
             @onCancel="onCancel"
@@ -23,6 +25,8 @@
         <r-form
           v-if="!dialog && dialogFormVisible"
           :width="formWidth"
+          :label-width="formLabelWidth"
+          :label-position="formLabelPosition"
           :children="formChildren"
           @onSubmit="onSubmit"
           @onCancel="onCancel"
@@ -64,6 +68,18 @@ export default {
     children: Array,
     store: Object,
     dialog: Boolean,
+    formLabelWidth: {
+      type: String,
+      default() {
+        return "80px";
+      },
+    },
+    formLabelPosition: {
+      type: String,
+      default() {
+        return "top";
+      },
+    },
     formWidth: {
       type: String,
       default() {
