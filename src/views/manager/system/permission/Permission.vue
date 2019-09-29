@@ -4,7 +4,6 @@
 
 <script>
 import RCrud from "@/components/Crud/Crud";
-// import users from "@/views/data/users";
 import {
   getPermissions,
   createPermission,

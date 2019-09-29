@@ -9,6 +9,7 @@ import RVUserEdit from "@/views/manager/system/user/Edit";
 import RVRole from "@/views/manager/system/role/Role";
 import RVGroup from "@/views/manager/system/group/Group";
 import RVPermission from "@/views/manager/system/permission/Permission";
+import RVPermission2 from "@/views/manager/system/permission2/Permission";
 
 Vue.use(Router);
 
@@ -66,6 +67,11 @@ export default new Router({
           path: "permissions",
           name: "permissions",
           component: RVPermission,
+        },
+        {
+          path: "permissions2",
+          name: "permissions2",
+          component: RVPermission2,
         },
       ],
     },

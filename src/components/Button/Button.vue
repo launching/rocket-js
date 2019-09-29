@@ -16,6 +16,7 @@ export default {
     icon: String,
     text: String,
     confirm: [String, Boolean],
+    ctx: Object,
   },
   computed: {
     btnProps() {
@@ -30,6 +31,11 @@ export default {
     },
   },
   methods: {
+    async _disabledHandler() {
+      return _.isFunction(this.disabled)
+        ? this.disabled(this.ctx)
+        : this.disabled;
+    },
     async click() {
       let message = this.confirm;
       let res = true;

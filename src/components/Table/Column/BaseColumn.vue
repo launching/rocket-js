@@ -24,6 +24,7 @@ export default {
     align: String,
     width: String,
     name: String,
+    format: [Function],
     type: {
       type: String,
       default: "text",
@@ -33,7 +34,7 @@ export default {
   methods: {
     text({ row }) {
       if (!this.name) {
-        return row;
+        return this.format ? this.format(row) : row;
       }
       return _.get(row, this.name);
     },

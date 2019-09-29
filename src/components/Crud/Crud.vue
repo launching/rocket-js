@@ -124,22 +124,26 @@ export default {
         toolbar: ["SEARCH", "CANCEL", "CREATE"],
         inline: true,
       };
-      filter.children = this.children.map(item => ({
-        options: item.options,
-        widget: item.widget,
-        name: item.name,
-      }));
+      filter.children = this.children
+        .filter(item => !!item.name)
+        .map(item => ({
+          options: item.options,
+          widget: item.widget,
+          name: item.name,
+        }));
 
       return filter;
     },
     formChildren() {
-      const children = this.children.map(item => ({
-        widget: item.widget,
-        name: item.name,
-        label: item.label,
-        validate: item.validate,
-        options: item.options,
-      }));
+      const children = this.children
+        .filter(item => !!item.name)
+        .map(item => ({
+          widget: item.widget,
+          name: item.name,
+          label: item.label,
+          validate: item.validate,
+          options: item.options,
+        }));
       return children;
     },
     dialogFormVisible() {
@@ -180,7 +184,6 @@ export default {
       this.$refs.table.refreshData();
     },
     async onClickTable(type, model) {
-      console.dir(type);
       if (type === statusMap.CREATE) {
         this.selectModel = {};
         this.crud.status = statusMap.CREATE;

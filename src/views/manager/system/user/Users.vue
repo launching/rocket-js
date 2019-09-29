@@ -20,6 +20,8 @@
 import RLocalTable from "@/components/Table/LocalTable";
 // import users from "@/views/data/users";
 import { getUsers, deleteUser } from "@/api/users";
+
+const SERVICE_USER = ["op_service"];
 export default {
   components: {
     RLocalTable,
@@ -55,6 +57,7 @@ export default {
             {
               text: "edit",
               size: "small",
+              disabled: user => ~SERVICE_USER.indexOf(user.name),
               action: user => {
                 this.$router
                   .push({ name: "UserEdit", query: { ...user } })
@@ -65,6 +68,7 @@ export default {
               text: "delete",
               size: "small",
               confirm: true,
+              disabled: user => ~SERVICE_USER.indexOf(user.name),
               action: async user => {
                 await deleteUser(user.id);
                 this.$message.success(`${user.name}已经被删除`);

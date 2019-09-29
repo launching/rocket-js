@@ -2,6 +2,7 @@ import _ from "lodash";
 export default {
   props: {
     disabled: [Function, Boolean],
+    ctx: Object,
   },
   data() {
     return {
@@ -12,7 +13,7 @@ export default {
   watch: {
     disabled: {
       async handler() {
-        const res = await this.disabledHandler();
+        const res = await this._disabledHandler();
         this.targetDisabled = !!res;
       },
       immediate: true,
@@ -21,8 +22,10 @@ export default {
   },
 
   methods: {
-    async disabledHandler() {
-      return _.isFunction(this.disabled) ? this.disabled() : this.disabled;
+    async _disabledHandler() {
+      return _.isFunction(this.disabled)
+        ? this.disabled(this.ctx)
+        : this.disabled;
     },
   },
 };

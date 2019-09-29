@@ -30,6 +30,13 @@ export default {
             },
           ],
         },
+        {
+          label: "permissions",
+          format(row) {
+            console.dir(row);
+            return row;
+          },
+        },
       ],
 
       store: {

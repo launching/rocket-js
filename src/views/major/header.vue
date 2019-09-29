@@ -10,6 +10,7 @@
         <el-menu-item index="users">Users</el-menu-item>
         <el-menu-item index="roles">Roles</el-menu-item>
         <el-menu-item index="permissions">Permissions</el-menu-item>
+        <el-menu-item index="permissions2">Permissions2</el-menu-item>
         <el-menu-item index="groups">Groups</el-menu-item>
       </el-menu-item-group>
       <el-menu-item-group title="分组2">

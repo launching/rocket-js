@@ -5,6 +5,7 @@
       v-for="(child, index) in children"
       v-bind="child"
       @click="handlerClick(child, index)"
+      :ctx="ctx"
     ></r-button>
   </div>
 </template>
